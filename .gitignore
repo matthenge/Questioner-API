@@ -1,3 +1,4 @@
 qenv/
 .env
 .vscode
+*__pycache__
