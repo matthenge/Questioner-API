@@ -20,7 +20,7 @@ class BaseTest(unittest.TestCase):
             "images": ["www.image1.com", "www.image2.com"],
             "topic": "data science",
             "happeningOn": "15 January 2019 10:00AM",
-            "topic": ["data science", "machine learning"],
+            "tags": ["data science", "machine learning"],
             "userId": "1"
         }
         self.user = {
