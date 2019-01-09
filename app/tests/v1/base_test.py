@@ -58,7 +58,7 @@ class BaseTest(unittest.TestCase):
         self.rsvp = {
             "rsvpId": "1",
             "meetup": "1",
-            "user": "2"
+            "user": "2",
             "response": "True"
         }
         self.login = {
