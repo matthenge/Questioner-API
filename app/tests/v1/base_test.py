@@ -14,14 +14,11 @@ class BaseTest(unittest.TestCase):
         self.app.testing = True
 
         self.meetup = {
-            "meetupId": "1",
-            "createdOn": "09 January 2019 09:35AM",
-            "location": "nairobi",
-            "images": ["www.image1.com", "www.image2.com"],
+            "location": "Kisumu",
+            "images": "www.image1.com",
             "topic": "data science",
-            "happeningOn": "15 January 2019 10:00AM",
-            "tags": ["data science", "machine learning"],
-            "userId": "1"
+            "happeningOn": "2019-10-22 10:00",
+            "userId": 1
         }
         self.user = {
             "userId": "1",
@@ -108,7 +105,7 @@ class BaseTest(unittest.TestCase):
         """Fetch all upcomming meetups"""
         res = self.client.get(
             '/api/v1/meetups')
-        data = json.loads(res.data)
+        return res
 
     def upvote_question(self):
         """Upvote a question"""
@@ -128,7 +125,8 @@ class BaseTest(unittest.TestCase):
 
     def login(self):
         """login user"""
-        response = self.client.post(
+        res = self.client.post(
             '/api/v1/auth/users/login',
             data=json.dumps(self.user),
             content_type='application/json')
+        return res
