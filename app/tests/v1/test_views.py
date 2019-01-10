@@ -14,7 +14,7 @@ class TestViews(BaseTest):
 
     def test_login(self):
         """Test user login endpoint"""
-        response = self.login()
+        response = self.user_login()
         self.assertEqual(response.status_code, 200)
 
     def test_create_meetup(self):
@@ -29,6 +29,7 @@ class TestViews(BaseTest):
 
     def test_all_meetups(self):
         """Test get all meetups endpoint"""
+        self.create_meetup()
         response = self.get_all_meetups()
         self.assertEqual(response.status_code, 200)
 
