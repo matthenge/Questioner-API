@@ -39,3 +39,17 @@ class AllMeetups(Resource):
             "message": "Meetup Created Successfully",
             "meetup": newMeetup.__dict__
         }, 201
+
+    def get(self):
+        """Fetch all meetups"""
+        meetups = MeetupModels.get_all(self)
+        if not meetups:
+            return {
+                "Error": "No meetups posted yet",
+                "status": 404
+            }, 404
+        return {
+            "Message": "Success",
+            "status": 200,
+            "Meetups": meetups
+        }

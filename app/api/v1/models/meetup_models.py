@@ -28,3 +28,7 @@ class MeetupModels:
             userId=self.userId
         )
         self.meetups.update({self.meetupId: data})
+
+    def get_all(self):
+        """Method to fetch all meetups"""
+        return MeetupModels.meetups

@@ -20,6 +20,15 @@ class BaseTest(unittest.TestCase):
             "happeningOn": "2019-10-22 10:00",
             "userId": 1
         }
+        self.oneMeetup = {
+            "meetupId": 3,
+            "createdOn": "2019-01-10 08:34 AM",
+            "location": "Kisumu",
+            "images": "www.image1.com",
+            "topic": "data science",
+            "happeningOn": "2019-10-22 10:00",
+            "userId": 1
+        }
         self.user = {
             "userId": "1",
             "firstname": "General",
@@ -123,10 +132,10 @@ class BaseTest(unittest.TestCase):
             content_type='application/json')
         return res
 
-    def login(self):
+    def user_login(self):
         """login user"""
         res = self.client.post(
             '/api/v1/auth/users/login',
-            data=json.dumps(self.user),
+            data=json.dumps(self.login),
             content_type='application/json')
         return res
