@@ -52,4 +52,21 @@ class AllMeetups(Resource):
             "Message": "Success",
             "status": 200,
             "Meetups": meetups
-        }
+        }, 200
+
+
+class OneMeetup(Resource):
+    """Class for single Meetup operations"""
+    def get(self, meetupId):
+        """Method to fetch specific meetup"""
+        meetup = MeetupModels.fetch_one(self, meetupId)
+        if not meetup:
+            return {
+                "Error": "Meetup does not exist",
+                "status": 404
+            }, 404
+        return {
+                "Message": "Success",
+                "status": 200,
+                "Meetup": meetup
+            }, 200
