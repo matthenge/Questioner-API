@@ -32,3 +32,9 @@ class MeetupModels:
     def get_all(self):
         """Method to fetch all meetups"""
         return MeetupModels.meetups
+
+    def fetch_one(self, meetupId):
+        """Method to fetch one meetup"""
+        for key in MeetupModels.meetups:
+            if key == meetupId:
+                return MeetupModels.meetups[key]
