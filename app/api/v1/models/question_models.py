@@ -1,8 +1,9 @@
 """Question Models"""
 import datetime
+from app.api.v1.utils.utilities import Helpers
 
 
-class QuestionModels:
+class QuestionModels(Helpers):
     """Class for question operations"""
     questions = {}
 
@@ -28,3 +29,11 @@ class QuestionModels:
             votes=self.votes
         )
         self.questions.update({self.questionId: data})
+
+    def upvote(self, questionId):
+        """Method to upvote a question"""
+        db = QuestionModels.questions
+        question = Helpers().fetch(db, questionId)
+        if question:
+            question["votes"] += 1
+            return question
