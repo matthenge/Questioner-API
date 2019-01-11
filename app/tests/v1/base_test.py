@@ -116,9 +116,7 @@ class BaseTest(unittest.TestCase):
     def upvote_question(self):
         """Upvote a question"""
         res = self.client.patch(
-            '/api/v1/questions/1/upvote',
-            data=json.dumps(self.question),
-            content_type='application/json')
+            '/api/v1/questions/1')
         return res
 
     def downvote_question(self):

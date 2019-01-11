@@ -16,7 +16,7 @@ parser.add_argument("body", type=str, required=True,
 
 
 class AllQuestions(Resource):
-    """Class for meetup endpoints"""
+    """Class for questions endpoints"""
 
     def __init__(self):
         """Initialize the meetup class"""
@@ -45,3 +45,20 @@ class AllQuestions(Resource):
             "message": "Question Posted Successfully",
             "Question": newQuestion.__dict__
         }, 201
+
+
+class OneQuestion(Resource):
+    """Single question operations"""
+
+    def patch(self, questionId):
+        """Upvote question method"""
+        question = QuestionModels.upvote(self, questionId)
+        if not question:
+            return {
+                "Error": "Question does not exist",
+                "status": 404
+            }, 404
+        return {
+            "message": "Upvote Successful",
+            "Question": question
+        }, 200
