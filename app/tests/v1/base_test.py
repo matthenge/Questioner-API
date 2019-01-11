@@ -53,13 +53,10 @@ class BaseTest(unittest.TestCase):
             "isAdmin": "False"
         }
         self.question = {
-            "questionId": "1",
-            "createdOn": "15 January 2019 10:00AM",
-            "createdBy": "2",
-            "meetup": "1",
+            "createdBy": 1,
+            "meetupId": 1,
             "title": "What is data science",
-            "body": "please explain data science in length",
-            "votes": "0"
+            "body": "please explain data science in length"
         }
         self.rsvp = {
             "rsvpId": "1",

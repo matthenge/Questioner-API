@@ -35,6 +35,7 @@ class TestViews(BaseTest):
 
     def test_post_question(self):
         """Test post question endpoint"""
+        self.create_meetup()
         response = self.post_question()
         self.assertEqual(response.status_code, 201)
 
