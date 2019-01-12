@@ -30,27 +30,10 @@ class BaseTest(unittest.TestCase):
             "userId": 1
         }
         self.user = {
-            "userId": "1",
-            "firstname": "General",
-            "lastname": "Mathenge",
-            "othername": "fake",
             "email": "general@gmail.com",
-            "phoneNumber": "0727272727",
             "username": "genmat",
-            "registered": "15 January 2019 10:00AM",
-            "isAdmin": "True"
-        }
-        self.user = {
-            "userId": "2",
-            "firstname": "Gene",
-            "lastname": "Math",
-            "othername": "origi",
-            "email": "gen@gmail.com",
-            "phoneNumber": "0727282828",
-            "username": "genorigi",
             "password": "qwerty123",
-            "registered": "15 January 2019 10:00AM",
-            "isAdmin": "False"
+            "confirm_password": "qwerty123"
         }
         self.question = {
             "createdBy": 1,
