@@ -5,7 +5,7 @@ from app.api.v1.models.meetup_models import MeetupModels
 from flask_restful.reqparse import RequestParser
 
 parser = RequestParser()
-parser.add_argument("createdBy", type=int, required=True,
+parser.add_argument("createdBy", type=str, required=True,
                     help="please input a valid userId")
 parser.add_argument("meetupId", type=int, required=True,
                     help="please input a valid meetupId")
@@ -47,8 +47,8 @@ class AllQuestions(Resource):
         }, 201
 
 
-class OneQuestion(Resource):
-    """Single question operations"""
+class Upvote(Resource):
+    """Upvode question operation"""
 
     def patch(self, questionId):
         """Upvote question method"""
@@ -60,5 +60,22 @@ class OneQuestion(Resource):
             }, 404
         return {
             "message": "Upvote Successful",
+            "Question": question
+        }, 200
+
+
+class Downvote(Resource):
+    """Downvote question Class"""
+
+    def patch(self, questionId):
+        """Downvote question method"""
+        question = QuestionModels.downvote(self, questionId)
+        if not question:
+            return {
+                "Error": "Question does not exist",
+                "status": 404
+            }, 404
+        return {
+            "message": "Downvote Successful",
             "Question": question
         }, 200
