@@ -47,6 +47,8 @@ class TestViews(BaseTest):
 
     def test_downvote_question(self):
         """Test Downvote question endpoint"""
+        self.post_question()
+        self.upvote_question()
         response = self.downvote_question()
         self.assertEqual(response.status_code, 200)
 
