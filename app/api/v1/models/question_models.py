@@ -37,3 +37,11 @@ class QuestionModels(Helpers):
         if question:
             question["votes"] += 1
             return question
+
+    def downvote(self, questionId):
+        """Method to downvote a question"""
+        db = QuestionModels.questions
+        question = Helpers().fetch(db, questionId)
+        if question:
+            question["votes"] -= 1
+            return question
