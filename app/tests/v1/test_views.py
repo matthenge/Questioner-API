@@ -14,6 +14,7 @@ class TestViews(BaseTest):
 
     def test_login(self):
         """Test user login endpoint"""
+        self.signup()
         response = self.user_login()
         self.assertEqual(response.status_code, 200)
 
