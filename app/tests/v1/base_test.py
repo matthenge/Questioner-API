@@ -48,7 +48,7 @@ class BaseTest(unittest.TestCase):
             "response": "True"
         }
         self.login = {
-            "username": "genorigi",
+            "username": "genmat",
             "password": "qwerty123"
         }
 
