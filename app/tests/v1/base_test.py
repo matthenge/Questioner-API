@@ -42,10 +42,8 @@ class BaseTest(unittest.TestCase):
             "body": "please explain data science in length"
         }
         self.rsvp = {
-            "rsvpId": "1",
-            "meetup": "1",
-            "user": "2",
-            "response": "True"
+            "meetupId": 1,
+            "userId": 2
         }
         self.login = {
             "username": "genmat",
@@ -79,7 +77,7 @@ class BaseTest(unittest.TestCase):
     def reserve_space(self):
         """reserve attendance"""
         res = self.client.post(
-            '/api/v1/rsvps',
+            '/api/v1/meetups/rsvps',
             data=json.dumps(self.rsvp),
             content_type='application/json')
         return res

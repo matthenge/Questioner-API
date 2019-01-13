@@ -55,5 +55,6 @@ class TestViews(BaseTest):
 
     def test_reserve_space(self):
         """Test RSVP endpoint"""
+        self.create_meetup()
         response = self.reserve_space()
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 201)
