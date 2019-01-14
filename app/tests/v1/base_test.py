@@ -31,9 +31,15 @@ class BaseTest(unittest.TestCase):
         }
         self.user = {
             "email": "general@gmail.com",
-            "username": "genmat",
-            "password": "qwerty123",
-            "confirm_password": "qwerty123"
+            "username": "genmatheng",
+            "password": "Qwerty123!",
+            "confirm_password": "Qwerty123!"
+        }
+        self.admin = {
+            "email": "martin@gmail.com",
+            "username": "martial",
+            "password": "Qwerty123!",
+            "confirm_password": "Qwerty123!"
         }
         self.question = {
             "createdBy": 1,
@@ -46,8 +52,8 @@ class BaseTest(unittest.TestCase):
             "userId": 2
         }
         self.login = {
-            "username": "genmat",
-            "password": "qwerty123"
+            "username": "genmatheng",
+            "password": "Qwerty123!"
         }
 
     def signup(self):
@@ -111,5 +117,13 @@ class BaseTest(unittest.TestCase):
         res = self.client.post(
             '/api/v1/auth/users/login',
             data=json.dumps(self.login),
+            content_type='application/json')
+        return res
+
+    def register(self):
+        """user registration"""
+        res = self.client.post(
+            '/api/v1/auth/users',
+            data=json.dumps(self.admin),
             content_type='application/json')
         return res
