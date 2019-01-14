@@ -7,10 +7,6 @@ import json
 
 class TestViews(BaseTest):
     """Test views"""
-    def test_signup(self):
-        """Test signup endpoint"""
-        response = self.signup()
-        self.assertEqual(response.status_code, 201)
 
     def test_login(self):
         """Test user login endpoint"""
@@ -20,6 +16,7 @@ class TestViews(BaseTest):
 
     def test_create_meetup(self):
         """Test create meetup endpoint"""
+        self.register()
         response = self.create_meetup()
         self.assertEqual(response.status_code, 201)
 
@@ -30,6 +27,7 @@ class TestViews(BaseTest):
 
     def test_all_meetups(self):
         """Test get all meetups endpoint"""
+        self.register()
         self.create_meetup()
         response = self.get_all_meetups()
         self.assertEqual(response.status_code, 200)
@@ -58,3 +56,10 @@ class TestViews(BaseTest):
         self.create_meetup()
         response = self.reserve_space()
         self.assertEqual(response.status_code, 201)
+
+    def test_signup(self):
+        """Test signup repeat username"""
+        response = self.signup()
+        result = json.loads(response.data.decode())
+        self.assertEqual(result["Error"], "Username already exists")
+        self.assertEqual(response.status_code, 403)
