@@ -7,7 +7,7 @@ class MeetupModels:
     meetups = {}
 
     def __init__(self, location, images, topic, happeningOn, userId):
-        """Initialize the questions models"""
+        """Initialize the meetup models"""
         self.meetupId = len(MeetupModels.meetups)+1
         self.createdOn = datetime.datetime.now().strftime("%Y-%m-%d %I:%M %p")
         self.location = location
