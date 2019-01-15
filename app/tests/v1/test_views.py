@@ -4,6 +4,8 @@ from app import create_app
 from .base_test import BaseTest
 import json
 
+message = "Password must have 8 chars, digit, lower & upper case, symbol"
+
 
 class TestViews(BaseTest):
     """Test views"""
@@ -57,9 +59,31 @@ class TestViews(BaseTest):
         response = self.reserve_space()
         self.assertEqual(response.status_code, 201)
 
-    def test_signup(self):
+    def test_repeat_username(self):
         """Test signup repeat username"""
         response = self.signup()
         result = json.loads(response.data.decode())
         self.assertEqual(result["Error"], "Username already exists")
+        self.assertEqual(response.status_code, 403)
+
+    def test_weak_password(self):
+        """Test weak password"""
+        response = self.weak_password()
+        result = json.loads(response.data.decode())
+        self.assertEqual(result["Error"], message)
+        self.assertEqual(response.status_code, 403)
+
+    def test_past_meetup_date(self):
+        """Test past meetup date"""
+        response = self.past_meetupdate()
+        result = json.loads(response.data.decode())
+        self.assertEqual(result["Error"], "New Meetup cannot be in the past")
+        self.assertEqual(response.status_code, 403)
+
+    def test_invalid_email(self):
+        """Test an invalid email"""
+        response = self.invalid_email()
+        result = json.loads(response.data.decode())
+        self.assertEqual(result["Error"],
+                         "martingmail.com is not a valid email")
         self.assertEqual(response.status_code, 403)
