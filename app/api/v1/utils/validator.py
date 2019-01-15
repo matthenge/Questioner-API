@@ -4,18 +4,21 @@ import re
 from app.api.v1.models.user_models import UserModels
 from app.api.v1.models.meetup_models import MeetupModels
 
-message = "Password must have 8 characters, digit, lower & upper case, symbol"
+message = "Password must have 8 chars, digit, lower & upper case, symbol"
 
 
-class Validators:
+class Validators():
     """Class for validations"""
+    def __init__(self):
+        """Initialize the validators class"""
+        pass
 
     def valid_time(self, happeningOn):
-        """method to validate happeningOn date"""
+        """Method to validate happeningOn date"""
         createdOn = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
         if happeningOn < createdOn:
             return {
-                "Error": "New Meetup cannot happen in the past"
+                "Error": "New Meetup cannot be in the past"
             }, 403
 
     def valid_email(self, email):
@@ -75,8 +78,7 @@ class Validators:
         user = UserModels().fetch_userId(userId)
         if not user:
             return {
-                "Error": "User does not exist",
-                "status": 404
+                "Error": "User does not exist"
             }, 404
 
     def validate_meetup(self, meetupId):
@@ -84,6 +86,5 @@ class Validators:
         meetup = MeetupModels.fetch_one(self, meetupId)
         if not meetup:
             return {
-                "Error": "Meetup does not exist",
-                "status": 404
+                "Error": "Meetup does not exist"
             }, 404
