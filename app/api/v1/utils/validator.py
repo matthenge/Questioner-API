@@ -38,8 +38,8 @@ class Validators():
                     Atleast 1 digit,
                     Atleast one special character
         """
-        regex = re.compile(r"^(?=.*[!$?])(?=.*[a-z])(?=.*[A-Z]).{8,}$")
-        if not re.match(regex, password):
+        regex = re.compile(r"^(?=.*[!@#$%^?&*()])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.{8,})")
+        if not re.search(regex, password):
             return {
                 "Error": message
             }, 403
@@ -62,8 +62,8 @@ class Validators():
 
     def user_exists(self, email, username):
         """Validator to find is username and email already registered"""
-        name = UserModels().fetch_username(username)
-        mail = UserModels().fetch_email(email)
+        name = UserModels.fetch_username(self, username)
+        mail = UserModels.fetch_email(self, email)
         if name:
             return {
                 "Error": "Username already exists"
@@ -75,7 +75,7 @@ class Validators():
 
     def validate_user(self, userId):
         """Validate if userId exists"""
-        user = UserModels().fetch_userId(userId)
+        user = UserModels.fetch_userId(self, userId)
         if not user:
             return {
                 "Error": "User does not exist"
