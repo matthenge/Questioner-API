@@ -6,27 +6,25 @@ from app.api.v1.utils.validator import Validators
 
 validate = Validators()
 
-parser = RequestParser()
-parser.add_argument("createdBy", type=int, required=True,
-                    help="please input a valid userId")
-parser.add_argument("meetupId", type=int, required=True,
-                    help="please input a valid meetupId")
-parser.add_argument("title", type=str, required=True,
-                    help="please input a valid title")
-parser.add_argument("body", type=str, required=True,
-                    help="Describe your question")
-
 
 class AllQuestions(Resource):
     """Class for questions endpoints"""
 
     def __init__(self):
         """Initialize the meetup class"""
-        pass
+        self.parser = RequestParser()
+        self.parser.add_argument("createdBy", type=int, required=True,
+                                 help="please input a valid userId")
+        self.parser.add_argument("meetupId", type=int, required=True,
+                                 help="please input a valid meetupId")
+        self.parser.add_argument("title", type=str, required=True,
+                                 help="please input a valid title")
+        self.parser.add_argument("body", type=str, required=True,
+                                 help="Describe your question")
 
     def post(self):
         """Create meetup endpoint"""
-        args = parser.parse_args()
+        args = self.parser.parse_args()
         args = request.get_json()
         createdBy = args["createdBy"]
         meetupId = args["meetupId"]
@@ -35,6 +33,8 @@ class AllQuestions(Resource):
 
         if validate.validate_meetup(meetupId):
             return validate.validate_meetup(meetupId)
+        if validate.valid_strings(title, body):
+            return validate.valid_strings(title, body)
         newQuestion = QuestionModels(createdBy, meetupId, title, body)
         newQuestion.save()
 
