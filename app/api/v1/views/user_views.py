@@ -5,7 +5,6 @@ from app.api.v1.models.user_models import UserModels
 from app.api.v1.utils.utilities import Helpers
 from app.api.v1.utils.validator import Validators
 
-users = UserModels()
 helpers = Helpers()
 validate = Validators()
 
@@ -46,11 +45,12 @@ class Users(Resource):
                 "Error": "Passwords do not match"
             }, 403
 
-        newUser = users.signup(email, username, password,
-                               confirm_password)
+        newUser = UserModels(email, username, password, confirm_password)
+        newUser.signup()
 
         return {
-            "message": "User registered Successfully"
+            "message": "User registered Successfully",
+            "User": newUser.__dict__
         }, 201
 
 
@@ -71,7 +71,7 @@ class Login(Resource):
         username = data["username"]
         password = data["password"]
 
-        user = users.fetch_username(username)
+        user = UserModels.fetch_username(self, username)
         if user:
             hashed = helpers.hash_password(password, username)
             check = helpers.check_hash_password(user["password"], hashed)

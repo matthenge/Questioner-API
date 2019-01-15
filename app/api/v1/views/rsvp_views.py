@@ -29,6 +29,8 @@ class AllRsvps(Resource):
 
         if validate.validate_meetup(meetupId):
             return validate.validate_meetup(meetupId)
+        if validate.validate_user(userId):
+            return validate.validate_user(userId)
         newRsvp = RsvpModels(meetupId, userId)
         newRsvp.save()
 
