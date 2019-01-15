@@ -72,7 +72,6 @@ class Login(Resource):
         password = data["password"]
 
         user = UserModels.fetch_username(self, username)
-        print(user)
         if user:
             hashed = helpers.hash_password(password, username)
             check = helpers.check_hash_password(user["password"], hashed)
