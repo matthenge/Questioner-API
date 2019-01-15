@@ -20,30 +20,47 @@ class TestViews(BaseTest):
         """Test create meetup endpoint"""
         self.register()
         response = self.create_meetup()
+        result = json.loads(response.data.decode())
+        self.assertEqual(result["message"], "Meetup Created Successfully")
         self.assertEqual(response.status_code, 201)
 
     def test_get_meetup(self):
         """Test get specific meetup endpoint"""
         response = self.get_meetup()
+        result = json.loads(response.data.decode())
+        self.assertEqual(result["Message"], "Success")
         self.assertEqual(response.status_code, 200)
 
-    def test_all_meetups(self):
+    def test_get_nonexistent_meetup(self):
+        """Test get nonexistent meetup"""
+        response = self.get_nonexistent_meetup()
+        result = json.loads(response.data.decode())
+        self.assertEqual(result["Error"], "Meetup does not exist")
+        self.assertEqual(response.status_code, 404)
+
+    def test_get_all_meetups(self):
         """Test get all meetups endpoint"""
         self.register()
         self.create_meetup()
         response = self.get_all_meetups()
+        result = json.loads(response.data.decode())
+        self.assertEqual(result["Message"], "Success")
         self.assertEqual(response.status_code, 200)
 
     def test_post_question(self):
         """Test post question endpoint"""
         self.create_meetup()
         response = self.post_question()
+        result = json.loads(response.data.decode())
+        self.assertEqual(result["message"], "Question Posted Successfully")
         self.assertEqual(response.status_code, 201)
 
     def test_upvote_question(self):
         """Test Upvote question endpoint"""
         self.post_question()
         response = self.upvote_question()
+        result = json.loads(response.data.decode())
+        self.assertEqual(result["message"], "Upvote Successful")
         self.assertEqual(response.status_code, 200)
 
     def test_downvote_question(self):
@@ -51,12 +68,16 @@ class TestViews(BaseTest):
         self.post_question()
         self.upvote_question()
         response = self.downvote_question()
+        result = json.loads(response.data.decode())
+        self.assertEqual(result["message"], "Downvote Successful")
         self.assertEqual(response.status_code, 200)
 
     def test_reserve_space(self):
         """Test RSVP endpoint"""
         self.create_meetup()
         response = self.reserve_space()
+        result = json.loads(response.data.decode())
+        self.assertEqual(result["message"], "RSVP created")
         self.assertEqual(response.status_code, 201)
 
     def test_repeat_username(self):
@@ -86,4 +107,21 @@ class TestViews(BaseTest):
         result = json.loads(response.data.decode())
         self.assertEqual(result["Error"],
                          "martingmail.com is not a valid email")
+        self.assertEqual(response.status_code, 403)
+
+    def test_get_upcoming_meetup(self):
+        """Test fetch upcoming meetups"""
+        self.future_meetups()
+        response = self.get_all_upcoming_meetups()
+        result = json.loads(response.data.decode())
+        self.assertEqual(result["Message"],
+                         "Success")
+        self.assertEqual(response.status_code, 200)
+
+    def test_empty_strings(self):
+        """Test empty string inputs"""
+        self.create_meetup()
+        response = self.post_empty_string()
+        result = json.loads(response.data.decode())
+        self.assertEqual(result["Error"], "Fields cannot be empty")
         self.assertEqual(response.status_code, 403)
