@@ -4,12 +4,12 @@ import datetime
 
 class MeetupModels:
     """Class for meetup operations"""
-    meetups = {}
+    meetups = []
 
     def __init__(self, location, images, topic, happeningOn, userId):
         """Initialize the meetup models"""
         self.meetupId = len(MeetupModels.meetups)+1
-        self.createdOn = datetime.datetime.now().strftime("%Y-%m-%d %I:%M %p")
+        self.createdOn = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
         self.location = location
         self.images = images
         self.topic = topic
@@ -27,7 +27,8 @@ class MeetupModels:
             happeningOn=self.happeningOn,
             userId=self.userId
         )
-        self.meetups.update({self.meetupId: data})
+        self.meetups.append(data)
+        return self.meetups
 
     def get_all(self):
         """Method to fetch all meetups"""
@@ -35,6 +36,15 @@ class MeetupModels:
 
     def fetch_one(self, meetupId):
         """Method to fetch one meetup"""
-        for key in MeetupModels.meetups:
-            if key == meetupId:
-                return MeetupModels.meetups[key]
+        for meetup in MeetupModels.meetups:
+            if meetup["meetupId"] == meetupId:
+                return meetup
+
+    def upcoming_meetups(self):
+        """Method to fetch upcoming meetups"""
+        upcoming = []
+        current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+        for meetup in MeetupModels.meetups:
+            if meetup["happeningOn"] > current_time:
+                upcoming.append(meetup)
+        return upcoming

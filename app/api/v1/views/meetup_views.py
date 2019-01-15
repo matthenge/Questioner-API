@@ -80,3 +80,21 @@ class OneMeetup(Resource):
                 "status": 200,
                 "Meetup": meetup
             }, 200
+
+
+class Upcoming(Resource):
+    """Class for Upcoming meetups"""
+
+    def get(self):
+        """Method to fetch only upcoming meetups"""
+        meetups = MeetupModels.upcoming_meetups(self)
+        if not meetups:
+            return {
+                "Error": "No Upcoming Meetups",
+                "status": 404
+            }, 404
+        return {
+                "Message": "Success",
+                "status": 200,
+                "Meetups": meetups
+            }, 200

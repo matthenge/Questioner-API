@@ -52,6 +52,12 @@ class BaseTest(unittest.TestCase):
             "title": "What is data science",
             "body": "please explain data science in length"
         }
+        self.emptyStrings = {
+            "createdBy": 1,
+            "meetupId": 1,
+            "title": "",
+            "body": "please explain data science in length"
+        }
         self.rsvp = {
             "meetupId": 1,
             "userId": 2
@@ -65,6 +71,13 @@ class BaseTest(unittest.TestCase):
             "username": "martial",
             "password": "qwerty123",
             "confirm_password": "qwerty123"
+        }
+        self.upcoming = {
+            "location": "Kisumu",
+            "images": "www.image1.com",
+            "topic": "data science",
+            "happeningOn": "2020-10-22 10:00",
+            "userId": 1
         }
 
     def signup(self):
@@ -91,6 +104,14 @@ class BaseTest(unittest.TestCase):
             content_type='application/json')
         return res
 
+    def post_empty_string(self):
+        """post question with empty fields"""
+        res = self.client.post(
+            '/api/v1/questions',
+            data=json.dumps(self.emptyStrings),
+            content_type='application/json')
+        return res
+
     def reserve_space(self):
         """reserve attendance"""
         res = self.client.post(
@@ -105,10 +126,22 @@ class BaseTest(unittest.TestCase):
             '/api/v1/meetups/1')
         return res
 
+    def get_nonexistent_meetup(self):
+        """Fetch meetup that does not exist"""
+        res = self.client.get(
+            '/api/v1/meetups/10')
+        return res
+
     def get_all_meetups(self):
-        """Fetch all upcomming meetups"""
+        """Fetch all meetups"""
         res = self.client.get(
             '/api/v1/meetups')
+        return res
+
+    def get_all_upcoming_meetups(self):
+        """Fetch all upcoming meetups"""
+        res = self.client.get(
+            '/api/v1/meetups/upcoming')
         return res
 
     def upvote_question(self):
@@ -160,5 +193,13 @@ class BaseTest(unittest.TestCase):
         res = self.client.post(
             '/api/v1/auth/users',
             data=json.dumps(self.email),
+            content_type='application/json')
+        return res
+
+    def future_meetups(self):
+        """Past happeningOn date"""
+        res = self.client.post(
+            '/api/v1/meetups',
+            data=json.dumps(self.upcoming),
             content_type='application/json')
         return res
