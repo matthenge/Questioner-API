@@ -3,9 +3,11 @@ from flask_restful import Api, Resource
 from flask_restful.reqparse import RequestParser
 from app.api.v1.models.user_models import UserModels
 from app.api.v1.utils.utilities import Helpers
+from app.api.v1.utils.validator import Validators
 
 users = UserModels()
 helpers = Helpers()
+validate = Validators()
 
 
 class Users(Resource):
@@ -32,12 +34,23 @@ class Users(Resource):
         password = args["password"]
         confirm_password = args["confirm_password"]
 
+        if validate.user_validator(email, password, username):
+            return validate.user_validator(email, password, username)
+        if validate.user_exists(email, username):
+            return validate.user_exists(email, username)
+        password = helpers.hash_password(password, username)
+        confirm_password = helpers.hash_password(confirm_password, username)
+        check = helpers.check_hash_password(password, confirm_password)
+        if not check:
+            return {
+                "Error": "Passwords do not match"
+            }, 403
+
         newUser = users.signup(email, username, password,
                                confirm_password)
 
         return {
-            "message": "User registered Successfully",
-            "user": newUser
+            "message": "User registered Successfully"
         }, 201
 
 
@@ -58,9 +71,18 @@ class Login(Resource):
         username = data["username"]
         password = data["password"]
 
-        _user = users.fetch_username(username)
-        password = helpers.hash_password(password, username)
-        if _user and password == _user["password"]:
-            return {
-                    "message": "Logged in as {}".format(username)
+        user = users.fetch_username(username)
+        if user:
+            hashed = helpers.hash_password(password, username)
+            check = helpers.check_hash_password(user["password"], hashed)
+            if check is True:
+                return {
+                    "message": "Logged in as {}".format(username),
+                    "data": user
                 }, 200
+            return {
+                    "Error": "Wrong password"
+            }, 403
+        return {
+            "Error": "User not found: Please register"
+        }, 404

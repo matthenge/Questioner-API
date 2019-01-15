@@ -1,8 +1,6 @@
 """User models"""
-from app.api.v1.utils.utilities import Helpers
 
 users = []
-helpers = Helpers()
 
 
 class UserModels():
@@ -10,25 +8,35 @@ class UserModels():
 
     def __init__(self):
         """Initialize the users models"""
-        pass
+        self.db = users
 
     def signup(self, email, username, password, confirm_password):
         """method to signup"""
         data = {
-            'userId': len(users) + 1,
+            'userId': len(self.db) + 1,
             'username': username,
             'email': email,
             'password': password,
             'confirm_password': confirm_password,
-            'isAdmin': False
+            'isAdmin': True
         }
-        password = helpers.hash_password(password, username)
-        confirm_password = helpers.hash_password(confirm_password, username)
-        users.append(data)
-        return users
+        self.db.append(data)
+        return self.db
 
     def fetch_username(self, username):
         """Method to fetch username"""
-        for user in users:
+        for user in self.db:
             if user["username"] == username:
+                return user
+
+    def fetch_email(self, email):
+        """Method to fetch email"""
+        for user in self.db:
+            if user["email"] == email:
+                return user
+
+    def fetch_userId(self, userId):
+        """Method to fetch user by Id"""
+        for user in self.db:
+            if user["userId"] == userId:
                 return user

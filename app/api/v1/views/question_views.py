@@ -1,11 +1,13 @@
 from flask import jsonify, make_response, request
 from flask_restful import Api, Resource
 from app.api.v1.models.question_models import QuestionModels
-from app.api.v1.models.meetup_models import MeetupModels
 from flask_restful.reqparse import RequestParser
+from app.api.v1.utils.validator import Validators
+
+validate = Validators()
 
 parser = RequestParser()
-parser.add_argument("createdBy", type=str, required=True,
+parser.add_argument("createdBy", type=int, required=True,
                     help="please input a valid userId")
 parser.add_argument("meetupId", type=int, required=True,
                     help="please input a valid meetupId")
@@ -31,13 +33,8 @@ class AllQuestions(Resource):
         title = args["title"]
         body = args["body"]
 
-        meetup = MeetupModels.fetch_one(self, meetupId)
-        if not meetup:
-            return {
-                "Error": "Meetup does not exist",
-                "status": 404
-            }, 404
-
+        if validate.validate_meetup(meetupId):
+            return validate.validate_meetup(meetupId)
         newQuestion = QuestionModels(createdBy, meetupId, title, body)
         newQuestion.save()
 
