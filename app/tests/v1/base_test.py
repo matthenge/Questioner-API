@@ -6,6 +6,7 @@ import json
 
 class BaseTest(unittest.TestCase):
     """Test views"""
+
     def setUp(self):
         """Set up test variables"""
         self.app = create_app()
@@ -21,15 +22,13 @@ class BaseTest(unittest.TestCase):
             "userId": 1
         }
         self.oneMeetup = {
-            "meetupId": 3,
-            "createdOn": "2019-01-10 08:34 AM",
             "location": "Kisumu",
             "images": "www.image1.com",
             "topic": "data science",
-            "happeningOn": "2019-10-22 10:00",
+            "happeningOn": "2018-10-22 10:00",
             "userId": 1
         }
-        self.user = {
+        self.duplicateuser = {
             "email": "general@gmail.com",
             "username": "genmatheng",
             "password": "Qwerty123!",
@@ -37,6 +36,12 @@ class BaseTest(unittest.TestCase):
         }
         self.admin = {
             "email": "martin@gmail.com",
+            "username": "martial",
+            "password": "Qwerty123!",
+            "confirm_password": "Qwerty123!"
+        }
+        self.email = {
+            "email": "martingmail.com",
             "username": "martial",
             "password": "Qwerty123!",
             "confirm_password": "Qwerty123!"
@@ -55,12 +60,18 @@ class BaseTest(unittest.TestCase):
             "username": "genmatheng",
             "password": "Qwerty123!"
         }
+        self.weakpass = {
+            "email": "martin@gmail.com",
+            "username": "martial",
+            "password": "qwerty123",
+            "confirm_password": "qwerty123"
+        }
 
     def signup(self):
         """user registration"""
         res = self.client.post(
             '/api/v1/auth/users',
-            data=json.dumps(self.user),
+            data=json.dumps(self.duplicateuser),
             content_type='application/json')
         return res
 
@@ -125,5 +136,29 @@ class BaseTest(unittest.TestCase):
         res = self.client.post(
             '/api/v1/auth/users',
             data=json.dumps(self.admin),
+            content_type='application/json')
+        return res
+
+    def weak_password(self):
+        """user registration"""
+        res = self.client.post(
+            '/api/v1/auth/users',
+            data=json.dumps(self.weakpass),
+            content_type='application/json')
+        return res
+
+    def past_meetupdate(self):
+        """Past happeningOn date"""
+        res = self.client.post(
+            '/api/v1/meetups',
+            data=json.dumps(self.oneMeetup),
+            content_type='application/json')
+        return res
+
+    def invalid_email(self):
+        """inavlid email"""
+        res = self.client.post(
+            '/api/v1/auth/users',
+            data=json.dumps(self.email),
             content_type='application/json')
         return res
