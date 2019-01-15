@@ -23,7 +23,7 @@ class Validators():
 
     def valid_email(self, email):
         """Method to validate email"""
-        ex = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
+        ex = re.compile(r"(^[a-zA-Z0-9_+-]+(\.[0-9a-zA-Z_-]+)*@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
         if not re.match(ex, email):
             return {
                 "Error": "{} is not a valid email".format(email)
