@@ -88,3 +88,12 @@ class Validators():
             return {
                 "Error": "Meetup does not exist"
             }, 404
+
+    def valid_strings(self, *args):
+        """Function to restrict empty strings"""
+        regex = re.compile(r"^(\s|\S)*(\S)+(\s|\S)*$")
+        for arg in args:
+            if not re.match(regex, arg):
+                return {
+                    "Error": "Fields cannot be empty"
+                }, 403
