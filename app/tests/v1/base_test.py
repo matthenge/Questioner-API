@@ -65,6 +65,10 @@ class BaseTest(unittest.TestCase):
             "username": "genmatheng",
             "password": "Qwerty123!"
         }
+        self.noUser = {
+            "username": "dedan",
+            "password": "kimathi"
+        }
         self.weakpass = {
             "email": "martin@gmail.com",
             "username": "martial",
@@ -200,5 +204,13 @@ class BaseTest(unittest.TestCase):
         res = self.client.post(
             '/api/v1/meetups',
             data=json.dumps(self.upcoming),
+            content_type='application/json')
+        return res
+
+    def no_user_login(self):
+        """Non-existent user login"""
+        res = self.client.post(
+            '/api/v1/auth/users/login',
+            data=json.dumps(self.noUser),
             content_type='application/json')
         return res
