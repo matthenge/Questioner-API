@@ -55,16 +55,19 @@ class BaseTest(unittest.TestCase):
         self.emptyStrings = {
             "createdBy": 1,
             "meetupId": 1,
-            "title": "",
+            "title": " ",
             "body": "please explain data science in length"
         }
         self.rsvp = {
-            "meetupId": 1,
-            "userId": 2
+            "userId": 1
         }
         self.login = {
             "username": "genmatheng",
             "password": "Qwerty123!"
+        }
+        self.noUser = {
+            "username": "dedan",
+            "password": "kimathi"
         }
         self.weakpass = {
             "email": "martin@gmail.com",
@@ -115,7 +118,7 @@ class BaseTest(unittest.TestCase):
     def reserve_space(self):
         """reserve attendance"""
         res = self.client.post(
-            '/api/v1/meetups/rsvps',
+            '/api/v1/meetups/1/rsvps',
             data=json.dumps(self.rsvp),
             content_type='application/json')
         return res
@@ -201,5 +204,13 @@ class BaseTest(unittest.TestCase):
         res = self.client.post(
             '/api/v1/meetups',
             data=json.dumps(self.upcoming),
+            content_type='application/json')
+        return res
+
+    def no_user_login(self):
+        """Non-existent user login"""
+        res = self.client.post(
+            '/api/v1/auth/users/login',
+            data=json.dumps(self.noUser),
             content_type='application/json')
         return res

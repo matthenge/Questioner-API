@@ -20,4 +20,5 @@ api.add_resource(Downvote, '/questions/<int:questionId>/downvote',
                  strict_slashes=False)
 api.add_resource(Users, '/auth/users', strict_slashes=False)
 api.add_resource(Login, '/auth/users/login', strict_slashes=False)
-api.add_resource(AllRsvps, '/meetups/rsvps', strict_slashes=False)
+api.add_resource(AllRsvps, '/meetups/<int:meetupId>/rsvps',
+                 strict_slashes=False)

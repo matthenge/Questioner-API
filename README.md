@@ -24,24 +24,27 @@ These instructions will get you a copy of the project running on your local mach
 
 ## Installing
 
-.Clone this repository from [here](https://github.com/matthenge/Questioner-API.git)
+    .Clone this repository from [here](https://github.com/matthenge/Questioner-API.git)
 
-.Ensure Python 3.6 is installed
+    .Ensure Python 3.6 is installed
 	
-.To test the API locally, set up a virtual environment in the root folder 
+    .To test the API locally, set up a virtual environment in the root folder 
     - virtualenv env
 	
-.Activate the virtual environment through; source env/bin/activate via the terminal
+    .Activate the virtual environment through; source env/bin/activate via the terminal
 	
-.Run the export FLASK_APP=run.py command via the terminal
+    .Run the export FLASK_APP=run.py command via the terminal
 	
-.Install dependencies through pip install -r requirements.txt
+    .Install dependencies through pip install -r requirements.txt
 	
-.Run tests through pytest
+    .Run tests through pytest
 	
-.Test the endpoints using Postman throught the button below.
+    .Test the endpoints using Postman throught the button below.
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/395b1c540ee8c34c70b6)
+
+    .Alternativerly the hosted app can be tested through the button below
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://questioner-v1.herokuapp.com/api/v1/meetups) 
 
 
 | **Method** | **Endpoint** | **Description** |
@@ -49,13 +52,13 @@ These instructions will get you a copy of the project running on your local mach
 | `POST` | /api/v1/auth/users | Signup new User |
 | `POST` | /api/v1/meetups | Create new Meetup |
 | `POST` | /api/v1/questions | Post new Question |
-| `POST` | /api/v1/rsvps | Create an RSVP |
+| `POST` | /api/v1/meetups/<meetupId>/rsvps | Create an RSVP |
 | `GET` | /api/v1/meetups/<meetupId> | Fetch a Specific Meetup |
 | `GET` | /api/v1/meetups | Fetch all Meetups |
+| `GET` | /api/v1/meetups/upcoming/ | Fetch all upcoming Meetups |
 | `PATCH` | /api/v1/questions/<questionId>/upvote | Upvote a specific Question | 
 | `PATCH` | /api/v1/questions/<questionId>/downvote | Downvote a specific Question |
 | `POST` | /api/v1/auth/users/login | Login a User |
-|
 
 ## Built with
 

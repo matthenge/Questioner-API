@@ -82,7 +82,7 @@ class Login(Resource):
                 }, 200
             return {
                     "Error": "Wrong password"
-            }, 403
+            }, 401
         return {
             "Error": "User not found: Please register"
         }, 404

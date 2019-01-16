@@ -35,8 +35,18 @@ class AllMeetups(Resource):
         happeningOn = args["happeningOn"]
         userId = args["userId"]
 
-        if validate.valid_strings(location, images, topic):
-            return validate.valid_strings(location, images, topic)
+        if validate.valid_strings(location) == "empty":
+            return {
+                "location": "Field cannot be empty"
+            }, 400
+        if validate.valid_strings(images) == "empty":
+            return {
+                "images": "Field cannot be empty"
+            }, 400
+        if validate.valid_strings(topic) == "empty":
+            return {
+                "topic": "Field cannot be empty"
+            }, 400
         if validate.valid_time(happeningOn):
             return validate.valid_time(happeningOn)
         if validate.validate_user(userId):
