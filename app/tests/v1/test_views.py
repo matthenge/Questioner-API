@@ -125,3 +125,11 @@ class TestViews(BaseTest):
         result = json.loads(response.data.decode())
         self.assertEqual(result["title"], "Field cannot be empty")
         self.assertEqual(response.status_code, 400)
+
+    def test_no_user_login(self):
+        """Test user login for an unregistered user"""
+        self.signup()
+        response = self.no_user_login()
+        result = json.loads(response.data.decode())
+        self.assertEqual(result["Error"], "User not found: Please register")
+        self.assertEqual(response.status_code, 404)
