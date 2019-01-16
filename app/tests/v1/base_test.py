@@ -55,7 +55,7 @@ class BaseTest(unittest.TestCase):
         self.emptyStrings = {
             "createdBy": 1,
             "meetupId": 1,
-            "title": "",
+            "title": " ",
             "body": "please explain data science in length"
         }
         self.rsvp = {
