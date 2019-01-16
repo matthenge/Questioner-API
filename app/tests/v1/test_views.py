@@ -123,5 +123,5 @@ class TestViews(BaseTest):
         self.create_meetup()
         response = self.post_empty_string()
         result = json.loads(response.data.decode())
-        self.assertEqual(result["Error"], "All fields must contain characters")
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(result["title"], "Field cannot be empty")
+        self.assertEqual(response.status_code, 400)
