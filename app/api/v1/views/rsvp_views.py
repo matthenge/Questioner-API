@@ -7,8 +7,6 @@ from app.api.v1.utils.validator import Validators
 validate = Validators()
 
 parser = RequestParser()
-parser.add_argument("meetupId", type=int, required=True,
-                    help="please input a valid meetupId")
 parser.add_argument("userId", type=int, required=True,
                     help="please input a valid userId")
 
@@ -20,11 +18,11 @@ class AllRsvps(Resource):
         """Initialize the rsvps class"""
         pass
 
-    def post(self):
+    def post(self, meetupId):
         """Create rsvp endpoint"""
         args = parser.parse_args()
         args = request.get_json()
-        meetupId = args["meetupId"]
+        meetupId = meetupId
         userId = args["userId"]
 
         if validate.validate_meetup(meetupId):
