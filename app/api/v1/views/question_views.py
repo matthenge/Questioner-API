@@ -33,8 +33,14 @@ class AllQuestions(Resource):
 
         if validate.validate_meetup(meetupId):
             return validate.validate_meetup(meetupId)
-        if validate.valid_strings(title, body):
-            return validate.valid_strings(title, body)
+        if validate.valid_strings(title) == "empty":
+            return {
+                "title": "Field cannot be empty"
+            }, 400
+        if validate.valid_strings(body) == "empty":
+            return {
+                "body": "Field cannot be empty"
+            }, 400
         newQuestion = QuestionModels(createdBy, meetupId, title, body)
         newQuestion.save()
 
