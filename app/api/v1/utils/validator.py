@@ -9,9 +9,6 @@ message = "Password must have 8 chars, digit, lower & upper case, symbol"
 
 class Validators():
     """Class for validations"""
-    def __init__(self):
-        """Initialize the validators class"""
-        pass
 
     def valid_time(self, happeningOn):
         """Method to validate happeningOn date"""
