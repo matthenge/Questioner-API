@@ -1,6 +1,7 @@
 """Database Configurations"""
 import os
 import psycopg2
+import hashlib
 from psycopg2.extras import RealDictCursor
 from instance.config import mainConfig
 
@@ -91,11 +92,32 @@ class QuestionerDB():
     def drop_tables(cls):
         """Method to delete tables"""
         query = """DROP TABLE IF EXISTS users, meetups, questions, rsvps,\
-        comments, votes CASCADE;"""
+        comments CASCADE;"""
         cls.cursor.execute(query)
         cls.connect.commit()
 
     @classmethod
     def database_admin(cls):
-        """method to create the first admin"""
-        
+        """method to create database admin"""
+        firstname = "Nelson"
+        lastname = "Mandela"
+        othername = "lohilala"
+        email = "mandelanelson@email.com"
+        phoneNumber = "0711333666"
+        username = "tata"
+        password = "andela"
+        salt = password + username
+        hashed = hashlib.md5(str.encode(salt)).hexdigest()
+        isAdmin = True
+        query = """SELECT * FROM users WHERE username = %s""".format(username)
+        cls.cursor.execute(query)
+        admin = cls.cursor.fetchone()
+        if not admin:
+            query = """INSERT INTO users (firstname, lastname, othername,\
+            email, phoneNumber, username, hashed, isAdmin) VALUES(firstname,\
+            lastname, othername, email, phoneNumber, username, hashed,\
+            isAdmin)"""
+            cls.cursor.execute(query)
+            cls.connect.commit()
+        else:
+            cls.connect.close()
