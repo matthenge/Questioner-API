@@ -16,7 +16,7 @@ class Validators():
         if happeningOn < createdOn:
             return {
                 "Error": "New Meetup cannot be in the past"
-            }, 403
+            }, 400
 
     def valid_email(self, email):
         """Method to validate email"""
@@ -24,7 +24,7 @@ class Validators():
         if not re.match(ex, email):
             return {
                 "Error": "{} is not a valid email".format(email)
-            }, 403
+            }, 400
 
     def valid_password(self, password):
         """
@@ -39,14 +39,14 @@ class Validators():
         if not re.search(regex, password):
             return {
                 "Error": message
-            }, 403
+            }, 400
 
     def valid_username(self, username):
         """Username should be atleast 3 characters long"""
         if len(username) < 3:
             return {
                 "Error": "Username is too short"
-            }, 403
+            }, 400
 
     def user_validator(self, email, password, username):
         """Validator for correct email, username and password"""
@@ -64,11 +64,11 @@ class Validators():
         if name:
             return {
                 "Error": "Username already exists"
-            }, 403
+            }, 400
         if mail:
             return {
                 "Error": "Email already exists"
-            }, 403
+            }, 400
 
     def validate_user(self, userId):
         """Validate if userId exists"""
