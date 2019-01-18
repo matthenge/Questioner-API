@@ -31,6 +31,8 @@ class AllQuestions(Resource):
         title = args["title"]
         body = args["body"]
 
+        if validate.validate_user(createdBy):
+            return validate.validate_user(createdBy)
         if validate.validate_meetup(meetupId):
             return validate.validate_meetup(meetupId)
         if validate.valid_strings(title) == "empty":
