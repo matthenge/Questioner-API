@@ -10,7 +10,6 @@ def create_app(configuration="development"):
     app.config.from_object(config.config[configuration])
     QuestionerDB.dbconnection(app.config["DB_URL"])
     QuestionerDB.create_tables()
-    app.register_blueprint(v1)
     app.register_blueprint(v2)
     app.url_map.strict_slashes = False
 
