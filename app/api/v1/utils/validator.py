@@ -15,16 +15,18 @@ class Validators():
         createdOn = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
         if happeningOn < createdOn:
             return {
-                "Error": "New Meetup cannot be in the past"
-            }, 403
+                "status": 400,
+                "error": "New Meetup cannot be in the past"
+            }, 400
 
     def valid_email(self, email):
         """Method to validate email"""
         ex = re.compile(r"(^[a-zA-Z0-9_+-]+(\.[0-9a-zA-Z_-]+)*@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
         if not re.match(ex, email):
             return {
-                "Error": "{} is not a valid email".format(email)
-            }, 403
+                "status": 400,
+                "error": "{} is not a valid email".format(email)
+            }, 400
 
     def valid_password(self, password):
         """
@@ -38,15 +40,17 @@ class Validators():
         regex = re.compile(r"^(?=.*[!@#$%^?&*()])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.{8,})")
         if not re.search(regex, password):
             return {
-                "Error": message
-            }, 403
+                "status": 400,
+                "error": message
+            }, 400
 
     def valid_username(self, username):
         """Username should be atleast 3 characters long"""
         if len(username) < 3:
             return {
-                "Error": "Username is too short"
-            }, 403
+                "status": 400,
+                "error": "Username is too short"
+            }, 400
 
     def user_validator(self, email, password, username):
         """Validator for correct email, username and password"""
@@ -63,19 +67,22 @@ class Validators():
         mail = UserModels.fetch_email(self, email)
         if name:
             return {
-                "Error": "Username already exists"
-            }, 403
+                "status": 400,
+                "error": "Username already exists"
+            }, 400
         if mail:
             return {
-                "Error": "Email already exists"
-            }, 403
+                "status": 400,
+                "error": "Email already exists"
+            }, 400
 
     def validate_user(self, userId):
         """Validate if userId exists"""
         user = UserModels.fetch_userId(self, userId)
         if not user:
             return {
-                "Error": "User does not exist"
+                "status": 404,
+                "error": "User does not exist"
             }, 404
 
     def validate_meetup(self, meetupId):
@@ -83,7 +90,8 @@ class Validators():
         meetup = MeetupModels.fetch_one(self, meetupId)
         if not meetup:
             return {
-                "Error": "Meetup does not exist"
+                "status": 404,
+                "error": "Meetup does not exist"
             }, 404
 
     def valid_strings(self, field):

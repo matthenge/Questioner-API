@@ -64,13 +64,13 @@ class AllMeetups(Resource):
         meetups = MeetupModels.get_all(self)
         if not meetups:
             return {
-                "Error": "No meetups posted yet",
+                "error": "No meetups posted yet",
                 "status": 404
             }, 404
         return {
-            "Message": "Success",
+            "message": "Success",
             "status": 200,
-            "Meetups": meetups
+            "meetups": meetups
         }, 200
 
 
@@ -82,13 +82,13 @@ class OneMeetup(Resource):
         meetup = MeetupModels.fetch_one(self, meetupId)
         if not meetup:
             return {
-                "Error": "Meetup does not exist",
+                "error": "Meetup does not exist",
                 "status": 404
             }, 404
         return {
-                "Message": "Success",
+                "message": "Success",
                 "status": 200,
-                "Meetup": meetup
+                "meetup": meetup
             }, 200
 
 
@@ -100,11 +100,11 @@ class Upcoming(Resource):
         meetups = MeetupModels.upcoming_meetups(self)
         if not meetups:
             return {
-                "Error": "No Upcoming Meetups",
+                "error": "No Upcoming Meetups",
                 "status": 404
             }, 404
         return {
-                "Message": "Success",
+                "message": "Success",
                 "status": 200,
-                "Meetups": meetups
+                "meetups": meetups
             }, 200

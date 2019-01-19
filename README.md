@@ -7,7 +7,7 @@
 
 # Questioner
 
-Questioner is a platform where users crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log..
+Questioner is a platform where users crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.
 
 ## Getting started
 These instructions will get you a copy of the project running on your local machine for development and testing puposes.
@@ -49,16 +49,16 @@ These instructions will get you a copy of the project running on your local mach
 
 | **Method** | **Endpoint** | **Description** |
 | --- | --- | --- |
-| `POST` | /api/v1/auth/users | Signup new User |
-| `POST` | /api/v1/meetups | Create new Meetup |
-| `POST` | /api/v1/questions | Post new Question |
-| `POST` | /api/v1/meetups/<meetupId>/rsvps | Create an RSVP |
-| `GET` | /api/v1/meetups/<meetupId> | Fetch a Specific Meetup |
-| `GET` | /api/v1/meetups | Fetch all Meetups |
-| `GET` | /api/v1/meetups/upcoming/ | Fetch all upcoming Meetups |
-| `PATCH` | /api/v1/questions/<questionId>/upvote | Upvote a specific Question | 
-| `PATCH` | /api/v1/questions/<questionId>/downvote | Downvote a specific Question |
-| `POST` | /api/v1/auth/users/login | Login a User |
+| `POST` | ` /api/v1/auth/users `| Signup new User |
+| `POST` | ` /api/v1/meetups ` | Create new Meetup |
+| `POST` | ` /api/v1/questions ` | Post new Question |
+| `POST` | ` /api/v1/meetups/<meetupId>/rsvps ` | Create an RSVP |
+| `GET` | ` /api/v1/meetups/<meetupId> ` | Fetch a Specific Meetup |
+| `GET` | ` /api/v1/meetups ` | Fetch all Meetups |
+| `GET` | ` /api/v1/meetups/upcoming ` | Fetch all upcoming Meetups |
+| `PATCH` | ` /api/v1/questions/<questionId>/upvote ` | Upvote a specific Question | 
+| `PATCH` | ` /api/v1/questions/<questionId>/downvote ` | Downvote a specific Question |
+| `POST` | ` /api/v1/auth/users/login ` | Login a User |
 
 ## Built with
 
