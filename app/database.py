@@ -3,24 +3,15 @@ import os
 import psycopg2
 import hashlib
 from psycopg2.extras import RealDictCursor
-from instance.config import mainConfig
 
 
 class QuestionerDB():
     """Class with database connection"""
 
-    db_config = os.getenv("FLASK_ENV")
-
     @classmethod
-    def dbconnection(cls):
+    def dbconnection(cls, url):
         """Method to create the database connection"""
-        db = mainConfig[db_config]
-        cls.connect = psycopg2.connect(
-            host=os.getenv("host"),
-            dbname=db().dbname,
-            user=os.getenv("user"),
-            password=os.getenv("password")
-        )
+        cls.connect = psycopg2.connect(url)
         cls.cursor = cls.connect.cursor(cursor_factory=RealDictCursor)
 
     @classmethod

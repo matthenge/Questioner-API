@@ -2,6 +2,7 @@
 import unittest
 from app import create_app
 import json
+from app.database import QuestionerDB
 
 
 class BaseTest(unittest.TestCase):
@@ -9,7 +10,7 @@ class BaseTest(unittest.TestCase):
 
     def setUp(self):
         """Set up test variables"""
-        self.app = create_app()
+        self.app = create_app(configuration="testing")
         self.client = self.app.test_client()
         self.app_context = self.app
         self.app.testing = True
@@ -226,3 +227,7 @@ class BaseTest(unittest.TestCase):
             data=json.dumps(self.question),
             content_type='application/json')
         return res
+
+    def tearDown(self):
+        """Method to destroy test database tables"""
+        QuestionerDB.drop_tables()
