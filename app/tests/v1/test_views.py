@@ -28,14 +28,14 @@ class TestViews(BaseTest):
         """Test get specific meetup endpoint"""
         response = self.get_meetup()
         result = json.loads(response.data.decode())
-        self.assertEqual(result["Message"], "Success")
+        self.assertEqual(result["message"], "Success")
         self.assertEqual(response.status_code, 200)
 
     def test_get_nonexistent_meetup(self):
         """Test get nonexistent meetup"""
         response = self.get_nonexistent_meetup()
         result = json.loads(response.data.decode())
-        self.assertEqual(result["Error"], "Meetup does not exist")
+        self.assertEqual(result["error"], "Meetup does not exist")
         self.assertEqual(response.status_code, 404)
 
     def test_get_all_meetups(self):
@@ -44,7 +44,7 @@ class TestViews(BaseTest):
         self.create_meetup()
         response = self.get_all_meetups()
         result = json.loads(response.data.decode())
-        self.assertEqual(result["Message"], "Success")
+        self.assertEqual(result["message"], "Success")
         self.assertEqual(response.status_code, 200)
 
     def test_post_question(self):
@@ -114,7 +114,7 @@ class TestViews(BaseTest):
         self.future_meetups()
         response = self.get_all_upcoming_meetups()
         result = json.loads(response.data.decode())
-        self.assertEqual(result["Message"],
+        self.assertEqual(result["message"],
                          "Success")
         self.assertEqual(response.status_code, 200)
 
@@ -131,5 +131,5 @@ class TestViews(BaseTest):
         self.signup()
         response = self.no_user_login()
         result = json.loads(response.data.decode())
-        self.assertEqual(result["Error"], "User not found: Please register")
+        self.assertEqual(result["Error"], "user not found: Please register")
         self.assertEqual(response.status_code, 404)

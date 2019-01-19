@@ -33,6 +33,7 @@ class AllRsvps(Resource):
         newRsvp.save()
 
         return {
+            "status": 201,
             "message": "RSVP created",
-            "RSVP": newRsvp.__dict__
+            "rsvp": newRsvp.__dict__
         }, 201

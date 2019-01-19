@@ -42,15 +42,17 @@ class Users(Resource):
         check = helpers.check_hash_password(password, confirm_password)
         if not check:
             return {
-                "Error": "Passwords do not match"
+                "status": 403,
+                "error": "Passwords do not match"
             }, 403
 
         newUser = UserModels(email, username, password, confirm_password)
         newUser.signup()
 
         return {
+            "status": 201,
             "message": "User registered Successfully",
-            "User": newUser.__dict__
+            "user": newUser.__dict__
         }, 201
 
 
@@ -77,12 +79,15 @@ class Login(Resource):
             check = helpers.check_hash_password(user["password"], hashed)
             if check is True:
                 return {
+                    "status": 200,
                     "message": "Logged in as {}".format(username),
                     "data": user
                 }, 200
             return {
-                    "Error": "Wrong password"
+                    "status": 404,
+                    "error": "Wrong password"
             }, 401
         return {
-            "Error": "User not found: Please register"
+            "status": 404,
+            "Error": "user not found: Please register"
         }, 404

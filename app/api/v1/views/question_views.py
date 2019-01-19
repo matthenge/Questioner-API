@@ -37,18 +37,21 @@ class AllQuestions(Resource):
             return validate.validate_meetup(meetupId)
         if validate.valid_strings(title) == "empty":
             return {
+                "status": 400,
                 "title": "Field cannot be empty"
             }, 400
         if validate.valid_strings(body) == "empty":
             return {
+                "status": 400,
                 "body": "Field cannot be empty"
             }, 400
         newQuestion = QuestionModels(createdBy, meetupId, title, body)
         newQuestion.save()
 
         return {
+            "status": 201,
             "message": "Question Posted Successfully",
-            "Question": newQuestion.__dict__
+            "question": newQuestion.__dict__
         }, 201
 
 
@@ -60,12 +63,13 @@ class Upvote(Resource):
         question = QuestionModels.upvote(self, questionId)
         if not question:
             return {
-                "Error": "Question does not exist",
-                "status": 404
+                "status": 404,
+                "error": "Question does not exist"
             }, 404
         return {
+            "status": 200,
             "message": "Upvote Successful",
-            "Question": question
+            "question": question
         }, 200
 
 
@@ -77,10 +81,11 @@ class Downvote(Resource):
         question = QuestionModels.downvote(self, questionId)
         if not question:
             return {
-                "Error": "Question does not exist",
-                "status": 404
+                "status": 404,
+                "error": "Question does not exist"
             }, 404
         return {
+            "status": 200,
             "message": "Downvote Successful",
-            "Question": question
+            "question": question
         }, 200
